@@ -6,7 +6,15 @@ This is BMAT backend API to manage tasks, such as CSV processing, etc.
 
 The API is built using Flask, Blueprints, and will run on a local server at: `http://localhost:5000/v1/<endpoint>`
 
-### Dependencies
+## Environment variables
+
+The following environment variables are required to run the app:
+
+```sh
+export FLASK_APP=run.py
+````
+
+## Dependencies
 
 Install dependencies (`poetry` >=1.5.0 needs to be [installed](https://python-poetry.org/docs/#installing-with-the-official-installer) on the system)
 
