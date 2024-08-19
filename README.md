@@ -4,7 +4,9 @@
 
 This is BMAT backend API to manage tasks, such as CSV processing, etc.
 
-The API is built using Flask, Blueprints, and will run on a local server at: `http://localhost:5000/v1/<endpoint>`
+The API is built using Flask and will run on a local server at: `http://localhost:5000/v1/<endpoint>`
+
+The API will receive a POST request with a CSV file and will process it asynchronously using a docker container with a RabbitMQ broker.
 
 ## Environment variables
 
@@ -12,6 +14,11 @@ The following environment variables are required to run the app:
 
 ```sh
 export FLASK_APP=run.py
+export RABBITMQ_BROKER=127.0.0.1
+export RABBITMQ_PORT=5672
+export RABBITMQ_USER=bmat_admin
+export RABBITMQ_PASSWORD=BM4AT_4dm1n
+export RABBITMQ_QUEUE=task_queue
 ````
 
 ## Dependencies
@@ -34,7 +41,15 @@ poetry shell
 
 ## Running the app
 
-In order to run the app, use the next command:
+### 1) Launch the docker containers
+
+To get started, you will need to move to the docker directory and run `docker-compose.yml` file with:
+
+```sh
+docker-compose -f up && docker-compose logs -f 
+```
+
+### 2) Run the app
 
 ```sh
 poetry run flask run

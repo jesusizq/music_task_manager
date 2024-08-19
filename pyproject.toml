@@ -12,6 +12,7 @@ black = "^24.8.0"
 blueprint = "^3.4.2"
 flask-cors = "^4.0.1"
 apifairy = "^1.4.0"
+rabbit = {path = "../rabbit"}
 
 
 [build-system]
