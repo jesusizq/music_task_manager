@@ -1,20 +1,16 @@
-from flask import Flask, jsonify
+from flask import Flask
+from apifairy import APIFairy
+
+apifairy = APIFairy()
 
 
 def create_app():
     app = Flask(__name__)
 
-    @app.route("/example", methods=["GET"])
-    def get_examples():
-        return jsonify(
-            [
-                {"example": "example1"},
-                {"example": "example2"},
-            ]
-        )
+    from .api import (
+        data_processor_api,
+    )
 
-    @app.route("/example", methods=["POST"])
-    def example():
-        return jsonify({"result": "success"})
+    app.register_blueprint(data_processor_api, url_prefix="/v1/data_processor")
 
     return app
