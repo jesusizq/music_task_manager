@@ -39,6 +39,14 @@ Activate `poetry environment`:
 poetry shell
 ```
 
+## Faking data
+
+To fake data, you can run the following script:
+    
+```sh
+python3 song_faker.py
+```
+
 ## Running the app
 
 ### 1) Launch the docker containers
