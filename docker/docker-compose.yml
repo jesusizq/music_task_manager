@@ -1,6 +1,20 @@
-version: '3'
+version: '3.3'
 
 services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: bmat
+      MYSQL_USER: bmat_admin
+      MYSQL_PASSWORD: BM4AT_4dm1n
+      MYSQL_ROOT_PASSWORD: BM4AT_4dm1n
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    command: --default-authentication-plugin=caching_sha2_password
+    volumes:
+      - my-db:/var/lib/mysql
   rabbitmq:
     image: rabbitmq:3-management
     ports:
@@ -9,3 +23,6 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: bmat_admin
       RABBITMQ_DEFAULT_PASS: BM4AT_4dm1n
+
+volumes:
+  my-db:

@@ -13,11 +13,14 @@ The API will receive a POST request with a CSV file and will process it asynchro
 The following environment variables are required to run the app:
 
 ```sh
-export FLASK_APP=run.py
-export RABBITMQ_BROKER=127.0.0.1
-export RABBITMQ_PORT=5672
-export RABBITMQ_USER=bmat_admin
-export RABBITMQ_PASSWORD=BM4AT_4dm1n
+export FLASK_APP=run.py \
+export FLASK_CONFIG=testing \
+export LOCAL_STORAGE_PATH=../local_storage \
+export TEST_DATABASE_URL=mysql://root:BM4AT_4dm1n@127.0.0.1:3306/bmat \
+export RABBITMQ_BROKER=127.0.0.1 \
+export RABBITMQ_PORT=5672 \
+export RABBITMQ_USER=bmat_admin \
+export RABBITMQ_PASSWORD=BM4AT_4dm1n \
 export RABBITMQ_QUEUE=task_queue
 ````
 
@@ -39,6 +42,12 @@ Activate `poetry environment`:
 poetry shell
 ```
 
+Now, if necessary, use the following command to deploy whatever is needed in the database:
+
+```sh
+flask deploy
+```
+
 ## Faking data
 
 To fake data, you can run the following script:
@@ -54,7 +63,7 @@ python3 song_faker.py
 To get started, you will need to move to the docker directory and run `docker-compose.yml` file with:
 
 ```sh
-docker-compose -f up && docker-compose logs -f 
+docker-compose up -d && docker-compose logs -f 
 ```
 
 ### 2) Run the app
@@ -66,4 +75,13 @@ Or alternatively:
 ```sh
 poetry shell
 flask run
+```
+
+## Modifying the database
+
+Once you have modified your model, you must apply the changes in the database. Make sure to have the last version before migrating.
+```sh
+flask db upgrade # Optional: to have the last version
+flask db migrate -m <message>
+flask db upgrade
 ```

@@ -1,15 +1,17 @@
 import os
-from app import create_app
-from config import DevelopmentConfig, ProductionConfig
+from app import create_app, db
+from config import config
+from flask_migrate import Migrate, upgrade
 
-
-config_name = (
-    ProductionConfig
-    if os.environ.get("FLASK_CONFIG") == "production"
-    else DevelopmentConfig
-)
-
-app = create_app(config_name)
+app = create_app(config[os.getenv("FLASK_CONFIG") or "default"])
+migrate = Migrate(app, db, compare_type=True)
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+
+@app.cli.command()
+def deploy():
+    """Run deployment tasks."""
+    # migrate database to latest revision
+    upgrade()
