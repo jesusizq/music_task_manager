@@ -15,13 +15,14 @@ The following environment variables are required to run the app:
 ```sh
 export FLASK_APP=run.py \
 export FLASK_CONFIG=testing \
-export LOCAL_STORAGE_PATH=../local_storage \
-export TEST_DATABASE_URL=mysql://root:BM4AT_4dm1n@127.0.0.1:3306/bmat \
+export STORAGE_PATH=../local_storage \
+export TEST_DATABASE_URL=mysql://root:BM4T_4dm1n@127.0.0.1:3306/bmat \
 export RABBITMQ_BROKER=127.0.0.1 \
+export RABBITMQ_PASSWORD=BM4AT_4dm1n \
 export RABBITMQ_PORT=5672 \
 export RABBITMQ_USER=bmat_admin \
-export RABBITMQ_PASSWORD=BM4AT_4dm1n \
 export RABBITMQ_QUEUE=task_queue
+
 ````
 
 ## Dependencies

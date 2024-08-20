@@ -1,14 +1,9 @@
-import os
 from flask import url_for, jsonify
-from app import db
+from app import db, logger
 from . import tasks_api as api
 from app.api.schemas.schemas import TaskSchema, TaskUpdateSchema, PaginationSchema
 from app.models import Task, TaskStatus
 from apifairy import response, other_responses, body, arguments
-from flask import current_app
-
-
-raw_storage = os.path.join(current_app.config.get("STORAGE_PATH"), "raw_data")
 
 
 @api.route("/health", methods=["GET"])
@@ -70,6 +65,7 @@ def edit_task_status(task_parameters, task_id):
     task.status = TaskStatus[status]
     db.session.add(task)
     db.session.commit()
+    logger.info(f"Task {task_id} status updated to {status}")
 
 
 @api.route("/status/<task_id>", methods=["GET"])

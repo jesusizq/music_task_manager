@@ -6,8 +6,8 @@ services:
     environment:
       MYSQL_DATABASE: bmat
       MYSQL_USER: bmat_admin
-      MYSQL_PASSWORD: BM4AT_4dm1n
-      MYSQL_ROOT_PASSWORD: BM4AT_4dm1n
+      MYSQL_PASSWORD: BM4T_4dm1n
+      MYSQL_ROOT_PASSWORD: BM4T_4dm1n
     ports:
       - '3306:3306'
     expose:

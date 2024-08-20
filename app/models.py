@@ -1,6 +1,7 @@
 import uuid
 from . import db
 from enum import IntEnum, auto
+from datetime import datetime
 
 
 class TaskStatus(IntEnum):
@@ -22,6 +23,7 @@ class Task(db.Model):
     status = db.Column(db.Enum(TaskStatus), nullable=False)
     file_input_path = db.Column(db.String(255), nullable=False)
     file_output_path = db.Column(db.String(255), nullable=True)
+    time_stamp = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __init__(self, task_type, status, file_input_path):
         self.task_type = task_type

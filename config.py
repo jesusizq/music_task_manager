@@ -8,6 +8,11 @@ class Config:
     SECRET_KEY = os.environ.get("BMAT_TM_SECRET_KEY") or "my_secret"
     DEBUG = False
     SQLALCHEMY_TRACK_MODIFICATIONS = True
+    RABBITMQ_HOST = os.environ.get("RABBITMQ_BROKER", "localhost")
+    RABBITMQ_PORT = os.environ.get("RABBITMQ_PORT", 5672)
+    RABBITMQ_USER = os.environ.get("RABBITMQ_USER", "user")
+    RABBITMQ_QUEUE = os.environ.get("RABBITMQ_QUEUE", "task_queue")
+    STORAGE_PATH = os.environ.get("STORAGE_PATH", "../local_storage")
 
 
 class DevelopmentConfig(Config):

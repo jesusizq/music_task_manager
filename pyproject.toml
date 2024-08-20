@@ -12,13 +12,14 @@ black = "^24.8.0"
 blueprint = "^3.4.2"
 flask-cors = "^4.0.1"
 apifairy = "^1.4.0"
-rabbit = {path = "../rabbit"}
 requests = "^2.32.3"
 flask-sqlalchemy = "^3.1.1"
 marshmallow-sqlalchemy = "^1.1.0"
 mysqlclient = "^2.2.4"
 flask-migrate = "^4.0.7"
 flask-caching = "^2.3.0"
+rabbit = {path = "../rabbit"}
+logger = {path = "../logger"}
 
 
 [build-system]
