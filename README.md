@@ -13,16 +13,15 @@ The API will receive a POST request with a CSV file and will process it asynchro
 The following environment variables are required to run the app:
 
 ```sh
-export FLASK_APP=run.py \
-export FLASK_CONFIG=testing \
-export STORAGE_PATH=../local_storage \
-export TEST_DATABASE_URL=mysql://root:BM4T_4dm1n@127.0.0.1:3306/bmat \
-export RABBITMQ_BROKER=127.0.0.1 \
-export RABBITMQ_PASSWORD=BM4AT_4dm1n \
-export RABBITMQ_PORT=5672 \
-export RABBITMQ_USER=bmat_admin \
-export RABBITMQ_QUEUE=task_queue
-
+FLASK_APP=run.py
+FLASK_CONFIG=testing
+STORAGE_PATH
+TEST_DATABASE_URL
+RABBITMQ_BROKER
+RABBITMQ_PASSWORD
+RABBITMQ_PORT
+RABBITMQ_USER
+RABBITMQ_QUEUE
 ````
 
 ## Dependencies
@@ -61,10 +60,10 @@ python3 song_faker.py
 
 ### 1) Launch the docker containers
 
-To get started, you will need to move to the docker directory and run `docker-compose.yml` file with:
+To get started, move to the docker directory and run `docker-compose.yml` file with:
 
 ```sh
-docker-compose up -d && docker-compose logs -f 
+docker-compose --env-file ../.env up -d && docker-compose logs -f
 ```
 
 ### 2) Run the app
