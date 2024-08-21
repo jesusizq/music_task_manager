@@ -2,7 +2,7 @@ import os
 from flask import request, jsonify, send_file
 from app import db, logger
 from . import data_processor_api as api
-from rabbit.utils import send_job
+from external.rabbit.utils import send_job
 from app.models import Task, TaskStatus, TaskType
 from apifairy import other_responses
 import time

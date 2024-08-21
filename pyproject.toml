@@ -18,8 +18,7 @@ marshmallow-sqlalchemy = "^1.1.0"
 mysqlclient = "^2.2.4"
 flask-migrate = "^4.0.7"
 flask-caching = "^2.3.0"
-rabbit = {path = "../rabbit"}
-logger = {path = "../logger"}
+pika = "^1.3.2"
 
 
 [build-system]

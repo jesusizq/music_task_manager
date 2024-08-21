@@ -4,10 +4,10 @@ services:
   db:
     image: mysql:8.0
     environment:
-      MYSQL_DATABASE: bmat
-      MYSQL_USER: bmat_admin
-      MYSQL_PASSWORD: BM4T_4dm1n
-      MYSQL_ROOT_PASSWORD: BM4T_4dm1n
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     ports:
       - '3306:3306'
     expose:
@@ -18,11 +18,11 @@ services:
   rabbitmq:
     image: rabbitmq:3-management
     ports:
-      - "5672:5672"
-      - "15672:15672"
+      - '5672:5672'
+      - '15672:15672'
     environment:
-      RABBITMQ_DEFAULT_USER: bmat_admin
-      RABBITMQ_DEFAULT_PASS: BM4AT_4dm1n
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
 
 volumes:
   my-db:
