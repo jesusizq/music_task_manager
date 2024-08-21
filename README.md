@@ -63,7 +63,7 @@ python3 song_faker.py
 To get started, move to the docker directory and run `docker-compose.yml` file with:
 
 ```sh
-docker-compose --env-file ../.env up -d && docker-compose logs -f
+docker-compose up -d && docker-compose logs -f
 ```
 
 ### 2) Run the app
@@ -84,4 +84,18 @@ Once you have modified your model, you must apply the changes in the database. M
 flask db upgrade # Optional: to have the last version
 flask db migrate -m <message>
 flask db upgrade
+```
+
+## Dockerizing the app
+
+To dockerize the app, you can run the following command:
+
+```sh
+docker build -t bmat-task-manager .
+```
+
+Alternatively, you can use the `docker-compose.yml` file to build the image and run the container with the app:
+
+```sh
+docker-compose up -d && docker-compose logs -f
 ```

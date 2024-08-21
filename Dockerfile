@@ -7,15 +7,16 @@ RUN apt-get update && \
     libmariadb-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
-
 RUN pip install poetry
 
 WORKDIR /app
 
 COPY pyproject.toml poetry.lock* /app/
-
-RUN poetry install
+RUN poetry install --no-root --no-dev
 
 COPY . /app
 
 EXPOSE 5000
+
+RUN chmod u+x ./docker_entry_point.sh
+ENTRYPOINT ["./docker_entry_point.sh", "--env-file", ".env"]

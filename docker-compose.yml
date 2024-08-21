@@ -1,6 +1,30 @@
 version: '3.3'
 
 services:
+  app:
+    build: .
+    ports:
+      - '5000:5000'
+    environment:
+        FLASK_APP: ${FLASK_APP}
+        FLASK_CONFIG: ${FLASK_CONFIG}
+        STORAGE_PATH: ${STORAGE_PATH}
+        TEST_DATABASE_URL: ${TEST_DATABASE_URL}
+        RABBITMQ_BROKER: ${RABBITMQ_BROKER}
+        RABBITMQ_PORT: ${RABBITMQ_PORT}
+        RABBITMQ_USER: ${RABBITMQ_USER}
+        RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD}
+        RABBITMQ_QUEUE: ${RABBITMQ_QUEUE}
+        MYSQL_DATABASE: ${MYSQL_DATABASE}
+        MYSQL_USER: ${MYSQL_USER}
+        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+        MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    depends_on:
+      - db
+      - rabbitmq
+    networks:
+      - bmat_network
+
   db:
     image: mysql:8.0
     environment:
@@ -15,6 +39,9 @@ services:
     command: --default-authentication-plugin=caching_sha2_password
     volumes:
       - my-db:/var/lib/mysql
+    networks:
+      - bmat_network
+
   rabbitmq:
     image: rabbitmq:3-management
     ports:
@@ -23,6 +50,13 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
       RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+    networks:
+      - bmat_network
 
 volumes:
   my-db:
+
+networks:
+  bmat_network:
+    driver: bridge
+    external: true
