@@ -1,12 +1,14 @@
-# BMAT Task Manager
+# BMAT Task Manager [![BMAT](https://www.bmat.com/wp-content/uploads/2021/01/cropped-bmat-logo-32x32.png)](https://www.bmat.com/es/)
 
 ## Overview
 
-This is BMAT backend API to manage tasks, such as CSV processing, etc.
+Backend API that runs at: `http://localhost:5000/v1/<endpoint>`.
 
-The API is built using Flask and will run on a local server at: `http://localhost:5000/v1/<endpoint>`
+Its role is to manage and assign tasks to associated services. It does it **asynchronously** via a RabbitMQ broker and a MySQL database.
 
-The API will receive a POST request with a CSV file and will process it asynchronously using a docker container with a RabbitMQ broker.
+Another service will receive a task from the Task Manager via rabbit, process the data, and then notify it back when the task is done.
+
+_**Disclaimer**: The `BMAT_task_manager/external` directory contains rabbit and logger libraries. They are there so the Dockerfile can copy them to the container. In a real-world scenario, they should be published and installed via Poetry, as all the other dependencies._
 
 ## Environment variables
 
@@ -50,7 +52,7 @@ flask deploy
 
 ## Faking data
 
-To fake data, you can run the following script:
+To fake a raw CSV data, you can run the following script to store a raw CSV at `utils/csv_files`:
     
 ```sh
 python3 song_faker.py
@@ -60,26 +62,35 @@ python3 song_faker.py
 
 ### 1) Launch the docker containers
 
-To get started, move to the docker directory and run `docker-compose.yml` file with:
+To get started, move to the docker directory and run `docker-compose.yml` inside:
 
 ```sh
+cd docker
 docker-compose up -d && docker-compose logs -f
 ```
-
 ### 2) Run the app
 
+Make sure you have updated the database before running the app:
+
 ```sh
+poetry run flask db upgrade # Optional: update the database (if necessary)
 poetry run flask run
 ```
-Or alternatively:
+
+Or, alternatively, if you have an `docker/.env` file ready (that way the docker-compose has access to the variables), you can execute the following script:
+
 ```sh
-poetry shell
-flask run
+bash ./docker_entry_point.sh --env-file ./docker/.env
+```
+
+If you just want to upgrade the database while applying the environment variables, you can run:
+```sh
+bash ./docker_entry_point.sh --env-file ./docker/.env --skip-run
 ```
 
 ## Modifying the database
 
-Once you have modified your model, you must apply the changes in the database. Make sure to have the last version before migrating.
+Once you have modified your database models, you must apply the changes in the database. Make sure to have the last version before migrating.
 ```sh
 flask db upgrade # Optional: to have the last version
 flask db migrate -m <message>
@@ -94,8 +105,11 @@ To dockerize the app, you can run the following command:
 docker build -t bmat-task-manager .
 ```
 
-Alternatively, you can use the `docker-compose.yml` file to build the image and run the container with the app:
+Alternatively, you can use the `docker-compose.yml` file (at the root of the project) to build the image and run the container with the app, rabbit and mysql services:
 
 ```sh
-docker-compose up -d && docker-compose logs -f
+docker-compose up --build -d && docker-compose logs -f
 ```
+
+_**Disclaimer**_: `docker-compose.yml` is not yet working correctly. Sometimes it
+does not connect the `app` service with the `db` service, due to the `TEST_DATABASE_URL` environment variable.
