@@ -1,36 +1,41 @@
+import logging
 from enum import Enum
-from datetime import datetime
 
 
 class LogLevel(Enum):
-    DEBUG = 10
-    INFO = 20
-    WARNING = 30
-    ERROR = 40
-    CRITICAL = 50
+    DEBUG = logging.DEBUG
+    INFO = logging.INFO
+    WARNING = logging.WARNING
+    ERROR = logging.ERROR
+    CRITICAL = logging.CRITICAL
 
 
 class Logger:
     def __init__(self, level=LogLevel.INFO):
-        self.level = level
+        self.logger = logging.getLogger(__name__)
+        self.logger.setLevel(level.value)
 
-    def log(self, level: LogLevel, message: str):
-        """Logs a message if the level is greater than or equal to the Logger's level."""
-        if self.level.value <= level.value:
-            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]
-            print(f"[{timestamp}] [{level.name}] {message}")
+        formatter = logging.Formatter(
+            "[%(asctime)s.%(msecs)03d] [%(levelname)s] %(message)s",
+            datefmt="%Y-%m-%d %H:%M:%S",
+        )
+
+        handler = logging.StreamHandler()
+        handler.setFormatter(formatter)
+
+        self.logger.addHandler(handler)
 
     def debug(self, message: str):
-        self.log(LogLevel.DEBUG, message)
+        self.logger.debug(message)
 
     def info(self, message: str):
-        self.log(LogLevel.INFO, message)
+        self.logger.info(message)
 
     def warning(self, message: str):
-        self.log(LogLevel.WARNING, message)
+        self.logger.warning(message)
 
     def error(self, message: str):
-        self.log(LogLevel.ERROR, message)
+        self.logger.error(message)
 
     def critical(self, message: str):
-        self.log(LogLevel.CRITICAL, message)
+        self.logger.critical(message)
