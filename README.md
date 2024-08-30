@@ -116,3 +116,12 @@ docker-compose up --build -d && docker-compose logs -f
 
 _**Disclaimer**_: `docker-compose.yml` is not yet working correctly. Sometimes it
 does not connect the `app` service with the `db` service, due to the `TEST_DATABASE_URL` environment variable.
+
+## License
+
+**Author**: Jesús Izquierdo Cubas
+
+- [LinkedIn](https://www.linkedin.com/in/jesus-izquierdo-cubas/)
+- Email: jesus.izquierdocubas@gmail.com
+
+This project is intended for demonstration purposes only, specifically to showcase my skills and experience as a software engineer for potential employment opportunities. It is not to be used, distributed, or reproduced in any way, and is solely for review and evaluation by potential employers.
