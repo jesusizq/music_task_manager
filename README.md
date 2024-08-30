@@ -1,4 +1,4 @@
-# BMAT Task Manager [![BMAT](https://www.bmat.com/wp-content/uploads/2021/01/cropped-bmat-logo-32x32.png)](https://www.bmat.com/es/)
+# Task Manager
 
 ## Overview
 
@@ -24,7 +24,7 @@ RABBITMQ_PASSWORD
 RABBITMQ_PORT
 RABBITMQ_USER
 RABBITMQ_QUEUE
-````
+```
 
 ## Dependencies
 
@@ -53,7 +53,7 @@ flask deploy
 ## Faking data
 
 To fake a raw CSV data, you can run the following script to store a raw CSV at `utils/csv_files`:
-    
+
 ```sh
 python3 song_faker.py
 ```
@@ -68,6 +68,7 @@ To get started, move to the docker directory and run `docker-compose.yml` inside
 cd docker
 docker-compose up -d && docker-compose logs -f
 ```
+
 ### 2) Run the app
 
 Make sure you have updated the database before running the app:
@@ -84,6 +85,7 @@ bash ./docker_entry_point.sh --env-file ./docker/.env
 ```
 
 If you just want to upgrade the database while applying the environment variables, you can run:
+
 ```sh
 bash ./docker_entry_point.sh --env-file ./docker/.env --skip-run
 ```
@@ -91,6 +93,7 @@ bash ./docker_entry_point.sh --env-file ./docker/.env --skip-run
 ## Modifying the database
 
 Once you have modified your database models, you must apply the changes in the database. Make sure to have the last version before migrating.
+
 ```sh
 flask db upgrade # Optional: to have the last version
 flask db migrate -m <message>
