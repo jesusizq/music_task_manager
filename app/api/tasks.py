@@ -66,6 +66,7 @@ def edit_task_status(task_parameters, task_id):
     db.session.add(task)
     db.session.commit()
     logger.info(f"Task {task_id} status updated to {status}")
+    return task
 
 
 @api.route("/status/<task_id>", methods=["GET"])
